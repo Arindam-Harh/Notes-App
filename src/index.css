@@ -1,0 +1,135 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+/* ---------- Theme variables ---------- */
+.container-notes {
+  --bg: #f7f3ed;
+  --surface: #fffcf8;
+  --text: #3a3530;
+  --muted: #8a8177;
+  --border: #e8e0d3;
+  --accent: #f0b95a;
+  --accent-text: #3a3530;
+  --shadow: rgba(120, 95, 60, 0.18);
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.container-notes.dark {
+  --bg: #23252e;
+  --surface: #2b2e39;
+  --text: #e9e7f0;
+  --muted: #9a9cae;
+  --border: #3a3e4c;
+  --accent: #e9b872;
+  --accent-text: #23252e;
+  --shadow: rgba(0, 0, 0, 0.35);
+}
+
+/* ---------- Header ---------- */
+.header-notes {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1.25rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.h1-notes {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+/* ---------- Theme toggle button ---------- */
+.header-notes button {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease, color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.header-notes button:hover {
+  transform: scale(1.08) rotate(12deg);
+}
+
+.header-notes button:active {
+  transform: scale(0.95);
+}
+
+/* Light mode: shows the moon */
+.header-notes .lightBtn {
+  background: #ebe6f7;
+  color: #5b5482;
+  box-shadow: 0 2px 8px rgba(91, 84, 130, 0.2);
+}
+
+/* Dark mode: shows the sun */
+.header-notes .darkBtn {
+  background: #3b3f50;
+  color: #f4c97a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ---------- Notes area ---------- */
+.display-notes {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  align-content: start;
+  padding: 1.25rem;
+}
+
+/* ---------- Floating add button ---------- */
+.add-notes {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: none;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-text);
+  font-size: 1.7rem;
+  cursor: pointer;
+  box-shadow: 0 6px 16px var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+}
+
+.add-notes:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 10px 22px var(--shadow);
+}
+
+.add-notes:active {
+  transform: scale(0.96);
+}
