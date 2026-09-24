@@ -11,13 +11,13 @@ export const App = () => {
   const [popup, setPopup] = useState(false);
 
   const [notes, setNotes] = useState(() => {
-  try {
-    const saved = JSON.parse(localStorage.getItem("notes"));
-    return Array.isArray(saved) ? saved : [];
-  } catch {
-    return [];
-  }
-});
+    try {
+      const saved = JSON.parse(localStorage.getItem("notes"));
+      return Array.isArray(saved) ? saved : [];
+    } catch {
+      return [];
+    }
+  });
 
   useEffect(() => {
     localStorage.setItem("notes", JSON.stringify(notes));
@@ -39,17 +39,21 @@ export const App = () => {
         </button>
       </header>
       <main className="display-notes">
-        <ul className="notes-ul">
-          {notes.map((note) => (
-            <li className="note-card" key={note.id}>
-              <h2 className="note-title">{note.title}</h2>
-              <p className="note-body">{note.des}</p>
-              <p className="note-date">
-                {new Date(note.date).toLocaleDateString()}
-              </p>
-            </li>
-          ))}
-        </ul>
+        {notes.length === 0 ? (
+          <p className="empty-notes">No notes yet. Tap + to add one.</p>
+        ) : (
+          <ul className="notes-ul">
+            {notes.map((note) => (
+              <li className="note-card" key={note.id}>
+                <h2 className="note-title">{note.title}</h2>
+                <p className="note-body">{note.des}</p>
+                <p className="note-date">
+                  {new Date(note.date).toLocaleDateString()}
+                </p>
+              </li>
+            ))}
+          </ul>
+        )}
         <button
           className="add-notes"
           aria-label="Add note"
