@@ -9,6 +9,20 @@ export const App = () => {
     return window.matchMedia("(prefers-color-scheme: dark)").matches;
   });
   const [popup, setPopup] = useState(false);
+
+  const [notes, setNotes] = useState(() => {
+  try {
+    const saved = JSON.parse(localStorage.getItem("notes"));
+    return Array.isArray(saved) ? saved : [];
+  } catch {
+    return [];
+  }
+});
+
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
+
   useEffect(() => {
     localStorage.setItem("theme", dark ? "dark" : "light");
   }, [dark]);
@@ -25,11 +39,26 @@ export const App = () => {
         </button>
       </header>
       <main className="display-notes">
-        <button className="add-notes" aria-label="Add note" onClick={() => setPopup(true)}>
+        <ul className="notes-ul">
+          {notes.map((note) => (
+            <li className="note-card" key={note.id}>
+              <h2 className="note-title">{note.title}</h2>
+              <p className="note-body">{note.des}</p>
+              <p className="note-date">
+                {new Date(note.date).toLocaleDateString()}
+              </p>
+            </li>
+          ))}
+        </ul>
+        <button
+          className="add-notes"
+          aria-label="Add note"
+          onClick={() => setPopup(true)}
+        >
           <FiPlus />
         </button>
       </main>
-      {popup && <Popup setPopup={setPopup} />}
+      {popup && <Popup setPopup={setPopup} setNotes={setNotes} />}
     </div>
   );
 };

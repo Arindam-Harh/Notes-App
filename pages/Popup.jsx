@@ -2,13 +2,23 @@ import { useState } from "react";
 import "./Popup.css";
 import { FiX } from "react-icons/fi";
 
-export const Popup = ({ setPopup }) => {
+export const Popup = ({ setPopup, setNotes }) => {
   const [title, setTitle] = useState("");
   const [des, setDes] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: add the note to the notes state
+
+    if (!title.trim() && !des.trim()) return;
+
+    const note = {
+      id: Date.now(),
+      title: title.trim(),
+      des: des.trim(),
+      date: Date.now(),
+    };
+
+    setNotes((prev) => [note, ...prev]);
     setPopup(false);
   };
 
