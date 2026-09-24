@@ -82,14 +82,12 @@ body {
   transform: scale(0.95);
 }
 
-/* Light mode: shows the moon */
 .header-notes .lightBtn {
   background: #ebe6f7;
   color: #5b5482;
   box-shadow: 0 2px 8px rgba(91, 84, 130, 0.2);
 }
 
-/* Dark mode: shows the sun */
 .header-notes .darkBtn {
   background: #3b3f50;
   color: #f4c97a;
@@ -99,43 +97,10 @@ body {
 /* ---------- Notes area ---------- */
 .display-notes {
   flex: 1;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1rem;
-  align-content: start;
-  padding: 1.25rem;
-}
-
-/* ---------- Floating add button ---------- */
-.add-notes {
-  position: fixed;
-  right: 1.5rem;
-  bottom: 1.5rem;
-  display: grid;
-  place-items: center;
-  width: 56px;
-  height: 56px;
-  border: none;
-  border-radius: 50%;
-  background: var(--accent);
-  color: var(--accent-text);
-  font-size: 1.7rem;
-  cursor: pointer;
-  box-shadow: 0 6px 16px var(--shadow);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
-}
-
-.add-notes:hover {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 10px 22px var(--shadow);
-}
-
-.add-notes:active {
-  transform: scale(0.96);
-}
-.display-notes {
-  flex: 1;
-  padding: 1.25rem 1.25rem 6rem; /* extra bottom space so the + button never covers the last card */
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 6rem;
 }
 
 .notes-ul {
@@ -148,6 +113,7 @@ body {
   align-items: start;
 }
 
+/* ---------- Note card ---------- */
 .note-card {
   display: flex;
   flex-direction: column;
@@ -179,7 +145,7 @@ body {
   margin: 0;
   font-size: 0.95rem;
   line-height: 1.5;
-  white-space: pre-wrap; /* keeps the line breaks typed in the textarea */
+  white-space: pre-wrap;
   overflow-wrap: anywhere;
   display: -webkit-box;
   -webkit-line-clamp: 6;
@@ -191,4 +157,32 @@ body {
   margin: 0.25rem 0 0;
   font-size: 0.78rem;
   color: var(--muted);
+}
+
+/* ---------- Floating add button ---------- */
+.add-notes {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: none;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-text);
+  font-size: 1.7rem;
+  cursor: pointer;
+  box-shadow: 0 6px 16px var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+}
+
+.add-notes:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 10px 22px var(--shadow);
+}
+
+.add-notes:active {
+  transform: scale(0.96);
 }
