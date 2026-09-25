@@ -2,26 +2,35 @@ import { useState } from "react";
 import "./Popup.css";
 import { FiX } from "react-icons/fi";
 
-export const Popup = ({ setPopup, setNotes }) => {
-  const [title, setTitle] = useState("");
-  const [des, setDes] = useState("");
+export const Popup = ({ setPopup, setNotes, editingNote, setEditingNote }) => {
+  const [title, setTitle] = useState(editingNote?.title || "");
+  const [des, setDes] = useState(editingNote?.des || "");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (!title.trim() && !des.trim()) return;
 
-    const note = {
-      id: Date.now(),
-      title: title.trim(),
-      des: des.trim(),
-      date: Date.now(),
-    };
+    if (editingNote) {
+      setNotes((prev) =>
+        prev.map((n) =>
+          n.id === editingNote.id
+            ? { ...n, title: title.trim(), des: des.trim() }
+            : n,
+        ),
+      );
+      setEditingNote(null);
+    } else {
+      const note = {
+        id: Date.now(),
+        title: title.trim(),
+        des: des.trim(),
+        date: Date.now(),
+      };
+      setNotes((prev) => [note, ...prev]);
+    }
 
-    setNotes((prev) => [note, ...prev]);
     setPopup(false);
   };
-
   return (
     <div className="overlay-popup">
       <form className="add-popup" onSubmit={handleSubmit}>
@@ -29,7 +38,10 @@ export const Popup = ({ setPopup, setNotes }) => {
           type="button"
           className="close-popup"
           aria-label="Close"
-          onClick={() => setPopup(false)}
+          onClick={() => {
+            setEditingNote(null);
+            setPopup(false);
+          }}
         >
           <FiX />
         </button>
@@ -53,7 +65,10 @@ export const Popup = ({ setPopup, setNotes }) => {
           <button
             type="button"
             className="cancel-popup"
-            onClick={() => setPopup(false)}
+            onClick={() => {
+              setEditingNote(null);
+              setPopup(false);
+            }}
           >
             Cancel
           </button>

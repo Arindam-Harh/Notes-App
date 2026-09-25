@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { FiSun, FiMoon, FiPlus } from "react-icons/fi";
+import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import { Popup } from "../pages/Popup";
 
 export const App = () => {
@@ -9,7 +10,7 @@ export const App = () => {
     return window.matchMedia("(prefers-color-scheme: dark)").matches;
   });
   const [popup, setPopup] = useState(false);
-
+  const [editingNote, setEditingNote] = useState(null);
   const [notes, setNotes] = useState(() => {
     try {
       const saved = JSON.parse(localStorage.getItem("notes"));
@@ -45,6 +46,27 @@ export const App = () => {
           <ul className="notes-ul">
             {notes.map((note) => (
               <li className="note-card" key={note.id}>
+                <div className="note-actions">
+                  <button
+                    className="edit-note"
+                    aria-label="Edit note"
+                    onClick={() => {
+                      setEditingNote(note);
+                      setPopup(true);
+                    }}
+                  >
+                    <FiEdit2 />
+                  </button>
+                  <button
+                    className="delete-note"
+                    aria-label="Delete note"
+                    onClick={() =>
+                      setNotes((prev) => prev.filter((n) => n.id !== note.id))
+                    }
+                  >
+                    <FiTrash2 />
+                  </button>
+                </div>
                 <h2 className="note-title">{note.title}</h2>
                 <p className="note-body">{note.des}</p>
                 <p className="note-date">
@@ -57,12 +79,22 @@ export const App = () => {
         <button
           className="add-notes"
           aria-label="Add note"
-          onClick={() => setPopup(true)}
+          onClick={() => {
+            setEditingNote(null);
+            setPopup(true);
+          }}
         >
           <FiPlus />
         </button>
       </main>
-      {popup && <Popup setPopup={setPopup} setNotes={setNotes} />}
+      {popup && (
+        <Popup
+          setPopup={setPopup}
+          setNotes={setNotes}
+          editingNote={editingNote}
+          setEditingNote={setEditingNote}
+        />
+      )}
     </div>
   );
 };

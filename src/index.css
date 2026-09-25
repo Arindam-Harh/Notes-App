@@ -198,3 +198,46 @@ body {
   border-radius: 16px;
   transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
+.note-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  order: -1; /* keeps them visually on top even though markup is unchanged elsewhere */
+}
+
+.edit-note,
+.delete-note {
+  padding: 0.3rem 0.7rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.edit-note {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+
+.edit-note:hover {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.delete-note {
+  background: transparent;
+  color: #e5484d;
+  border: 1px solid #e5484d;
+}
+
+.delete-note:hover {
+  background: #e5484d;
+  color: #fff;
+}
+
+.edit-note:active,
+.delete-note:active {
+  transform: scale(0.95);
+}
