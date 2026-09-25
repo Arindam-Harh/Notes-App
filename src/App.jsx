@@ -123,6 +123,7 @@ export const App = () => {
           <FiPlus />
         </button>
       </main>
+      
       {popup && (
         <Popup
           setPopup={setPopup}
