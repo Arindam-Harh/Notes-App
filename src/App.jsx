@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FiSun, FiMoon, FiPlus } from "react-icons/fi";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
+import { FiSearch, FiX } from "react-icons/fi";
 import { Popup } from "../pages/Popup";
 
 export const App = () => {
@@ -19,6 +20,13 @@ export const App = () => {
       return [];
     }
   });
+  const [search, setSearch] = useState("");
+
+  const filteredNotes = notes.filter(
+    (note) =>
+      note.title.toLowerCase().includes(search.toLowerCase()) ||
+      note.des.toLowerCase().includes(search.toLowerCase()),
+  );
 
   useEffect(() => {
     localStorage.setItem("notes", JSON.stringify(notes));
@@ -30,21 +38,49 @@ export const App = () => {
   return (
     <div className={`container-notes ${dark ? "dark" : "light"}`}>
       <header className="header-notes">
-        <h1 className="h1-notes">Notes</h1>
-        <button
-          aria-label="Toggle theme"
-          className={dark ? "darkBtn" : "lightBtn"}
-          onClick={() => setDark(!dark)}
-        >
-          {dark ? <FiSun /> : <FiMoon />}
-        </button>
+        <div className="nav-brand">
+          <h1 className="h1-notes">Notes</h1>
+        </div>
+
+        <div className="search-notes">
+          <FiSearch className="search-icon" />
+
+          <input
+            type="text"
+            placeholder="Search notes..."
+            aria-label="Search notes"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+
+          {search && (
+            <button
+              type="button"
+              className="clear-search"
+              aria-label="Clear search"
+              onClick={() => setSearch("")}
+            >
+              <FiX />
+            </button>
+          )}
+        </div>
+
+        <div className="nav-actions">
+          <button
+            aria-label="Toggle theme"
+            className={dark ? "darkBtn" : "lightBtn"}
+            onClick={() => setDark(!dark)}
+          >
+            {dark ? <FiSun /> : <FiMoon />}
+          </button>
+        </div>
       </header>
       <main className="display-notes">
-        {notes.length === 0 ? (
+        {filteredNotes.length === 0 ? (
           <p className="empty-notes">No notes yet. Tap + to add one.</p>
         ) : (
           <ul className="notes-ul">
-            {notes.map((note) => (
+            {filteredNotes.map((note) => (
               <li className="note-card" key={note.id}>
                 <div className="note-actions">
                   <button
