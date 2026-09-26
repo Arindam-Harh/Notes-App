@@ -106,7 +106,13 @@ export const App = () => {
                 <h2 className="note-title">{note.title}</h2>
                 <p className="note-body">{note.des}</p>
                 <p className="note-date">
-                  {new Date(note.date).toLocaleDateString()}
+                  {new Date(note.date).toLocaleDateString("en-GB", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit",
+                  })}
                 </p>
               </li>
             ))}
