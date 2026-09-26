@@ -3,6 +3,7 @@ import { FiSun, FiMoon, FiPlus } from "react-icons/fi";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import { FiSearch, FiX } from "react-icons/fi";
 import { Popup } from "../pages/Popup";
+import { ConfirmDelete } from "../pages/ConfirmDelete";
 
 export const App = () => {
   const [dark, setDark] = useState(() => {
@@ -21,6 +22,7 @@ export const App = () => {
     }
   });
   const [search, setSearch] = useState("");
+  const [confirmDelete, setConfirmDelete] = useState(null);
 
   const filteredNotes = notes.filter(
     (note) =>
@@ -96,9 +98,7 @@ export const App = () => {
                   <button
                     className="delete-note"
                     aria-label="Delete note"
-                    onClick={() =>
-                      setNotes((prev) => prev.filter((n) => n.id !== note.id))
-                    }
+                    onClick={() => setConfirmDelete(note)}
                   >
                     <FiTrash2 />
                   </button>
@@ -123,13 +123,23 @@ export const App = () => {
           <FiPlus />
         </button>
       </main>
-      
+
       {popup && (
         <Popup
           setPopup={setPopup}
           setNotes={setNotes}
           editingNote={editingNote}
           setEditingNote={setEditingNote}
+        />
+      )}
+      {confirmDelete && (
+        <ConfirmDelete
+          note={confirmDelete}
+          onCancel={() => setConfirmDelete(null)}
+          onConfirm={() => {
+            setNotes((prev) => prev.filter((n) => n.id !== confirmDelete.id));
+            setConfirmDelete(null);
+          }}
         />
       )}
     </div>
